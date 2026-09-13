@@ -1,0 +1,84 @@
+name: Add service photos
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '.github/workflows/add-service-photos.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-services:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Add six distinct Unsplash photos to services
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('index.html')
+          html = path.read_text(encoding='utf-8')
+
+          photos = {
+            "Création de sites web": (
+              "https://images.unsplash.com/photo-1610473199899-fc0ec6e204bb?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHwxfHNlYXJjaHwxfHx3b21hbiUyMGxhcHRvcHxlbnwwfHx8fDE3MDAwMDAwMDB8&ixlib=rb-4.1.0&q=80&w=1200",
+              "Femme noire travaillant sur un ordinateur portable — création web"
+            ),
+            "Développement d'applications": (
+              "https://images.unsplash.com/photo-1769375581646-a31c35f448d9?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHwxfHNlYXJjaHwxfHxibGFjayUyMG1hbiUyMGVudHJlcHJlbmV1cnxlbnwwfHx8fDE3MDAwMDAwMDB8&ixlib=rb-4.1.0&q=80&w=1200",
+              "Jeune homme noir entrepreneur — développement d'applications"
+            ),
+            "Branding & Design": (
+              "https://images.unsplash.com/photo-1779181668325-6f918a73bb54?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHwxfHNlYXJjaHwxfHxibGFjayUyMHdvbWFuJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzAwMDAwMDAwfA%3D%3D&ixlib=rb-4.1.0&q=80&w=1200",
+              "Jeune femme noire souriante — branding et design"
+            ),
+            "Marketing digital": (
+              "https://images.unsplash.com/photo-1778403249208-f205a6eb3959?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHwxfHNlYXJjaHwxfHxibGFjayUyMG1hbiUyMHBob25lfGVufDB8fHx8MTcwMDAwMDAwMHw%3D&ixlib=rb-4.1.0&q=80&w=1200",
+              "Jeune homme noir utilisant son téléphone — marketing digital"
+            ),
+            "Intelligence artificielle": (
+              "https://images.unsplash.com/photo-1776781205743-33b4c1106adc?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHwxfHNlYXJjaHwxfHxibGFjayUyMG1hbiUyMHN1aXR8ZW58MHx8fHwxNzAwMDAwMDAwfA%3D%3D&ixlib=rb-4.1.0&q=80&w=1200",
+              "Homme noir en costume — intelligence artificielle et innovation"
+            ),
+            "Création de contenu": (
+              "https://images.unsplash.com/photo-1700295490655-ded1289421f3?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHwxfHNlYXJjaHwxfHxibGFjayUyMHdvbWFuJTIwbGFwdG9wfGVufDB8fHx8MTcwMDAwMDAwMHw%3D&ixlib=rb-4.1.0&q=80&w=1200",
+              "Femme noire au travail — création de contenu"
+            ),
+          }
+
+          for title, (url, alt) in photos.items():
+              marker = f'<h3>{title}</h3>'
+              pos = html.find(marker)
+              if pos < 0:
+                  raise SystemExit(f'Service introuvable: {title}')
+              card_start = html.rfind('<article class="card reveal">', 0, pos)
+              if card_start < 0:
+                  raise SystemExit(f'Carte introuvable: {title}')
+              icon_pos = html.find('<div class="card-icon">', card_start, pos)
+              if icon_pos < 0:
+                  raise SystemExit(f'Icone introuvable: {title}')
+              if 'class="service-photo"' not in html[card_start:pos]:
+                  img = (f'<img class="service-photo" src="{url}" alt="{alt}" '
+                         'loading="lazy" style="width:100%;height:190px;object-fit:cover;'
+                         'border-radius:18px;margin-bottom:24px;" />\n            ')
+                  html = html[:icon_pos] + img + html[icon_pos:]
+
+          path.write_text(html, encoding='utf-8')
+          PY
+
+      - name: Commit changes
+        run: |
+          git config user.name "Bickri Service Agency"
+          git config user.email "254426317+mabdourahamane886-lang@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "feat: add distinct African photos to service cards"
+            git push
+          fi
