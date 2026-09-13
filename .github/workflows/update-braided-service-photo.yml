@@ -1,0 +1,42 @@
+name: Update braided service photo
+
+on:
+  push:
+    paths:
+      - '.github/workflows/update-braided-service-photo.yml'
+      - 'index.html'
+
+permissions:
+  contents: write
+
+jobs:
+  update-photo:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Replace only Branding & Design photo
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          old = 'https://images.unsplash.com/photo-1779181668325-6f918a73bb54?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHwxfHNlYXJjaHwxfHxibGFjayUyMHdvbWFuJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzAwMDAwMDAwfA%3D%3D&ixlib=rb-4.1.0&q=80&w=1200'
+          new = 'https://images.unsplash.com/photo-1643724826646-09f7a17ecc3e?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=1200'
+          if old not in s:
+              raise SystemExit('Expected Branding & Design image URL not found; no change made.')
+          s = s.replace(old, new, 1)
+          s = s.replace('alt="Jeune femme noire souriante — branding et design"', 'alt="Femme noire avec des tresses — branding et design"', 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Commit targeted change
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m 'fix: use braided woman for one service photo [skip ci]'
+          git push
