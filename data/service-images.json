@@ -1,0 +1,11 @@
+{
+  "services": [
+    {"name":"Création de sites web","image":"https://images.unsplash.com/photo-1610473199899-fc0ec6e204bb?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000","alt":"Femme noire travaillant sur un ordinateur portable — création de sites web"},
+    {"name":"E-commerce","image":"https://images.unsplash.com/photo-1769375581646-a31c35f448d9?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000","alt":"Jeune homme noir — e-commerce"},
+    {"name":"Réseaux sociaux","image":"https://images.unsplash.com/photo-1779181668325-6f918a73bb54?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000","alt":"Jeune femme noire souriante — réseaux sociaux"},
+    {"name":"Branding et identité visuelle","image":"https://images.unsplash.com/photo-1643724826646-09f7a17ecc3e?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=1200","alt":"Femme noire avec des tresses — branding et identité visuelle"},
+    {"name":"Marketing digital","image":"https://images.unsplash.com/photo-1719060969377-be075baf138b?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000","alt":"Femme noire en tenue de diplômée — marketing digital"},
+    {"name":"Intelligence artificielle","image":"https://images.unsplash.com/photo-1776781205743-33b4c1106adc?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000","alt":"Jeune homme noir en costume — intelligence artificielle"},
+    {"name":"Assistance WhatsApp","image":"https://images.unsplash.com/photo-1700295490655-ded1289421f3?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000","alt":"Femme noire devant un ordinateur portable — assistance WhatsApp"}
+  ]
+}
